@@ -1,6 +1,5 @@
 package ca.ualberta.cs.lonelytwitter;
 
-import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import ca.ualberta.cs.lonelytweet.ImportantLonelyTweet;
+import ca.ualberta.cs.lonelytweet.LonelyTweet;
+import ca.ualberta.cs.lonelytweet.NormalLonelyTweet;
 
 public class LonelyTwitterActivity extends Activity {
 
@@ -45,10 +48,8 @@ public class LonelyTwitterActivity extends Activity {
 
 		NormalLonelyTweet tweet;
 
-		tweet = new NormalLonelyTweet(text, new Date());
+		tweet = (NormalLonelyTweet) NewNormalOrImportantTweet(text);
 
-		//TODO: use different sub-classes (Normal or Important) based on usage of "*" in the text.
-		
 		if (tweet.isValid()) {
 			tweets.add(tweet);
 			adapter.notifyDataSetChanged();
@@ -58,6 +59,17 @@ public class LonelyTwitterActivity extends Activity {
 		} else {
 			Toast.makeText(this, "Invalid tweet", Toast.LENGTH_SHORT).show();
 		}
+	}
+
+	private LonelyTweet NewNormalOrImportantTweet(String text) {
+		LonelyTweet tweet;
+		if (text.contains("*")){
+			tweet = new ImportantLonelyTweet(text);
+		}
+		else {
+			tweet = new NormalLonelyTweet(text);
+		}
+		return tweet;
 	}
 
 	public void clear(View v) {

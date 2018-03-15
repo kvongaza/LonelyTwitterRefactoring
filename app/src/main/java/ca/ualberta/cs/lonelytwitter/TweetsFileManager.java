@@ -12,7 +12,9 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 
-public class TweetsFileManager {
+import ca.ualberta.cs.lonelytweet.NormalLonelyTweet;
+
+class TweetsFileManager {
 
 	private Context ctx;
 
